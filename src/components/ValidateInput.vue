@@ -2,10 +2,18 @@
  <div class="mb-3">
   <label for="exampleFormControlInput1" class="form-label">{{label}}</label>
   <input  class="form-control" 
+  v-if="tag == 'input'"
   v-bind="$attrs"
   v-model="val"
   @blur="validateInput"
   >
+   <textarea
+      v-else
+      class="form-control"
+      @blur="validateInput"
+      v-model="val"
+      v-bind="$attrs"
+    />
    <div v-if="error" style="display:block" class="invalid-feedback">
       {{message}}
     </div>
@@ -28,6 +36,10 @@ export default defineComponent({
   props:{
     label:String,
     modelValue:String,
+    tag:{
+      type:String,
+      default:'input'
+    },
     rules:{
       type: Array as PropType<RulesProp>
     }

@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-dark bg-primary justify-content-between mb-4 px-4">
-    <a class="navbar-brand" href="#">开玩笑</a>
+    <router-link to="/" class="navbar-brand" href="#">开玩笑</router-link>
     <ul v-if="!user.isLogin" class="list-inline mb-0">
       <li class="list-inline-item">
         <a href="#" class="btn btn-outline-light my-2">登陆</a>
@@ -13,7 +13,7 @@
         <li class="list-inline-item">   
          <dropdown-menu :name="user.name"> 
         <dropdown-item>
-          <a href="#" class="dropdown-item">新建文章</a>
+          <router-link class="dropdown-item" to="/create">新建文章</router-link>
         </dropdown-item>
         <dropdown-item disabled>
           <a href="#" class="dropdown-item">编辑资料</a>
