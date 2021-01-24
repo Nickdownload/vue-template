@@ -24,7 +24,7 @@ export default defineComponent({
   name: 'home',
   setup(){
    const store = useStore()
-   const list = computed(()=>store.state.columnList)
+   const list = computed(()=>store.state.columns.data)
    return {
        list
    }

@@ -16,10 +16,10 @@ type FunProp = ()=>Boolean
 export const emitter = mitt()
 export default defineComponent({
   name: 'ValidateForm',
-  setup(){
+  setup(props,context){
     const submitForm =()=>{
      let bool=  callArr.map(Func=>Func()).every(item=>item)
-     console.log(bool)
+      context.emit('formSubmit',bool)
     } 
     let callArr:FunProp[] =[]
       const callback = (e:any)=>{

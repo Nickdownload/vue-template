@@ -3,15 +3,16 @@
   <label for="exampleFormControlInput1" class="form-label">{{label}}</label>
   <input  class="form-control" 
   v-if="tag == 'input'"
+  v-model="inputRef.val"
   v-bind="$attrs"
-  v-model="val"
   @blur="validateInput"
   >
+  
    <textarea
       v-else
       class="form-control"
       @blur="validateInput"
-      v-model="val"
+      v-model="inputRef.val"
       v-bind="$attrs"
     />
    <div v-if="error" style="display:block" class="invalid-feedback">
@@ -21,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType ,ref,onMounted} from 'vue';
+import { defineComponent, PropType ,ref,onMounted,computed,reactive} from 'vue';
 import {emitter} from './ValidateForm.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 interface RuleProp {
@@ -46,7 +47,14 @@ export default defineComponent({
   },
   setup(props,context){
     console.log(props)
-    const val =ref('')
+     const inputRef = reactive({
+      val: computed({
+        get: () => props.modelValue || '',
+        set: val => {
+          context.emit('update:modelValue', val)
+        }
+      })
+    })
     const message=ref('')
     const error =ref(false)
     
@@ -57,12 +65,14 @@ export default defineComponent({
                message.value=item.message
                switch(item.type){
                    case 'email':
-                  passed = (emailReg.test(val.value))
+                  passed = (emailReg.test(inputRef.val))
                   break
                  case 'required':
-                  passed = !(val.value.trim()=='')
+                  passed = !(inputRef.val.trim()=='')
                   break
-               
+                 case 'custom':
+                  passed = item.validator ? item.validator() :true
+                  break
                  default:
                    passed=true;
                   return   
@@ -80,7 +90,7 @@ export default defineComponent({
     return {
       validateInput,
       ref,
-      val,
+      inputRef,
       error,
       message
     }

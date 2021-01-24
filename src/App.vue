@@ -14,15 +14,17 @@
     </small>
   </footer>
  <!-- <login /> -->
- <!-- <column-list :testData="test"></column-list> -->
+ <!-- <column-list :list="columns"></column-list> -->
 </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent ,computed} from 'vue';
+import Message from './components/Message.vue'
+import {useStore} from 'vuex'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader ,{UserProps} from './components/Header/GlobalHeader.vue'
-// import ColumnList from './views/ColumnList.vue'
+import createMessage from './views/CreateMessage'
 import Login from './views/Login.vue'
 export interface ColumnProps{
   id:Number;
@@ -35,19 +37,21 @@ export default defineComponent({
   name: 'App',
   components: {
    GlobalHeader,
-   Login
-  //  ColumnList
+   Login,
+   Message
   },
   setup(){
-    // const test = testData
-    const user:UserProps={
-       isLogin:true,
-       name:"Nick",
-       id:123
-    }
+    createMessage('error','success')
+    const currentPage=1
+    const pageSize = 5
+    const store = useStore()
+    store.dispatch('fetchColumn',{
+      currentPage,
+      pageSize
+    })
+    const user = computed(()=>store.state.user)
     return {
-      user,
-      // test
+      user
     }
   }
 });

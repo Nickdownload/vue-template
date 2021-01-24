@@ -15,7 +15,7 @@ module.exports = {
         }).then((response) => {
           res.json(response.data)
         }).catch((e) => {
-          console.log(e)
+          res.json(e)
         })
       })
       // 新建用户

@@ -4,6 +4,7 @@ const Home =()=> import(/*webpackChunkName:'Home'*/'@/views/Home.vue')
 const Login = ()=>import(/*wbepackChunkName:'Login'*/'@/views/Login.vue')
 const CreatePost = ()=>import(/*wbepackChunkName:'CreatePost'*/'@/views/CreatePost.vue')
 const Column = ()=>import(/*wbepackChunkName:'Column'*/'@/views/Column.vue')
+const SignUp = ()=>import(/*webpackChunkName:'SignUp'*/'@/views/Signup.vue')
 const routerHistory = createWebHistory()
 const router = createRouter({
     history: routerHistory,
@@ -17,6 +18,11 @@ const router = createRouter({
            path:'/login',
            name:'login',
            component:Login
+       },
+       {
+          path:'/signUp',
+          name:'signUp',
+          component:SignUp 
        },
        {
         path:'/create',

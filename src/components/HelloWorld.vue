@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-
+  <div class="alert alert-primary" role="alert">
+  A simple primary alert—check it out!
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'HelloWorld',
+  name: 'message',
 });
 </script>
 
